@@ -2,22 +2,22 @@
 import { useState } from 'react';
 import './App.css'
 import { Button } from './Button';
+import prankaudio from './assets/prankaudio.mp3';
+
+const audio = new Audio(prankaudio);
 const operators = ["%","/","*","-","+"];
 const App = () => {
   
   const [strToDisplay,setStrToDisplay] = useState("");
   const [lastOperator,setLastOperator] = useState("");
+  const [isMouseDown,setIsMouseDown] = useState();
+  const [isPrank, setIsPrank] = useState(false);
 
 const buttonAction =(value) =>{
-
-    //displayElm.classList.remove("prank");
-if(value === "AC")
-        {setStrToDisplay("");return;}
+   isPrank && setIsPrank(false);
+if(value === "AC"){setStrToDisplay("");return;}
 /* make c button work */
-if(value== "C"){
-  setStrToDisplay(strToDisplay.slice(0,-1));
-return;
-                }
+if(value== "C"){setStrToDisplay(strToDisplay.slice(0,-1));return;}
 /* equal but buuton operation work */
 if(value=== "=" || value==="Enter"){
     setLastOperator("");
@@ -40,28 +40,20 @@ if (operators.includes(lastChar))
     }
     } 
   /*  only one dot need to be present in */
-
   if (value === "."){
     const lastOperatorIndex = strToDisplay.lastIndexOf(lastOperator);
     const lastNumebrSet = strToDisplay.slice(lastOperatorIndex);
-    if (lastNumebrSet.includes(".")) {
-      return;
-    }
-
-    if (!lastOperator && strToDisplay.includes(".")) {
-      return;
-    }
-  }
+    if (lastNumebrSet.includes(".")) {return;}
+    if (!lastOperator && strToDisplay.includes(".")) {return;}}
 setStrToDisplay(strToDisplay + value);
                                 };
-
                                 /* Total vallue calculated */
 const displayTotal = () =>{
     const extraValue = randomValue();
     /* adding randomvalue  */
      if (extraValue) {
-    //displayElm.classList.add("prank");
-    //audio.play();
+    setIsPrank(true);
+    audio.play();
   }
   const total = eval(strToDisplay)+ extraValue;
     setStrToDisplay(total.toString());}; 
@@ -71,10 +63,15 @@ const num = Math.round(Math.random()*10);
 }; 
 
 const handleOnButtonClick = (value) =>{
+  setIsMouseDown();
     buttonAction(value);
-    console.log(value);
+    
   };
 
+  const OnMouseDown =(value) =>{
+setIsMouseDown(value);
+  };
+  
   const btns = [
     {cls:"btn-ac",label:"AC"},
     {cls:"btn-c",label:"C"},
@@ -96,13 +93,21 @@ const handleOnButtonClick = (value) =>{
     {cls:"btn-dot",label:"."},
     {cls:"btn-equal",label:"="},
   ];
+  
   return (
     <>
 <div className="wrapper flex-center">
     <div className="calculator">
-    <div className="display arbutus-regular">{strToDisplay||"0.00"}</div>
-    {btns.map((btn,i) =>(<Button  key={i} cls={btn.cls} label={btn.label} handleOnButtonClick ={handleOnButtonClick}/>))}
+    <div className={isPrank?"display arbutus-regular prank":"display arbutus-regular"}>{strToDisplay||"0.00"}</div>
+    {btns.map((btn,i) =>(<Button  
+    key ={i}{...btn}
+     handleOnButtonClick ={handleOnButtonClick}
+     OnMouseDown={OnMouseDown}
+     isMouseDown={isMouseDown}/>
+     //key={i}{...btn} cls={btn.cls} label={btn.label}
+     ))}
     </div>
+    
 </div>
     </>
   )
