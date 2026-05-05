@@ -1,30 +1,35 @@
 
 import './App.css'
+import { Button } from './Button';
 const App = () => {
+
+  const btns = [
+    {cls:"btn-ac",label:"AC"},
+    {cls:"btn-c",label:"C"},
+    {cls:"btn-per",label:"%"},
+    {cls:"btn-divide",label:"/"},
+    {cls:"btn-7",label:"7"},
+    {cls:"btn-8",label:"8"},
+    {cls:"btn-9",label:"9"},
+    {cls:"btn-multi",label:"*"},
+    {cls:"btn-4",label:"4"},
+    {cls:"btn-5",label:"5"},
+    {cls:"btn-6",label:"6"},
+    {cls:"btn-minus",label:"-"},
+    {cls:"btn-1",label:"1"},
+    {cls:"btn-2",label:"2"},
+    {cls:"btn-3",label:"3"},
+    {cls:"btn-plus",label:"+"},
+    {cls:"btn-0",label:"0"},
+    {cls:"btn-dot",label:"."},
+    {cls:"btn-equal",label:"="},
+  ];
   return (
     <>
  <div className="wrapper flex-center">
     <div className="calculator">
-        <div className="display arbutus-regular">0.0</div>
-        <div className="btn btn-ac">AC</div>
-        <div className="btn btn-c">C</div>
-        <div className="btn btn-per">%</div>
-        <div className="btn btn-divide">/</div>
-        <div className="btn btn-7">7</div>
-        <div className="btn btn-8">8</div>
-        <div className="btn btn-9">9</div>
-        <div className="btn btn-multi">*</div>
-        <div className="btn btn-4">4</div>
-        <div className="btn btn-5">5</div>
-        <div className="btn btn-6">6</div>
-        <div className="btn btn-minus">-</div>
-        <div className="btn btn-1">1</div>
-        <div className="btn btn-2">2</div>
-        <div className="btn btn-3">3</div>
-        <div className="btn btn-plus">+</div>
-        <div className="btn btn-0">0</div>
-        <div className="btn btn-dot">.</div>
-        <div className="btn btn-equal">=</div>
+    <div className="display arbutus-regular">0.0</div>
+    {btns.map((btn,i) =>(<Button  key={i} cls={btn.cls} label={btn.label}/>))}
     </div>
 </div>
     </>
