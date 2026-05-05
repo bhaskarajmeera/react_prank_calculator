@@ -1,8 +1,9 @@
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './App.css'
 import { Button } from './Button';
 import prankaudio from './assets/prankaudio.mp3';
+import { useEffect } from 'react';
 
 const audio = new Audio(prankaudio);
 const operators = ["%","/","*","-","+"];
@@ -12,6 +13,20 @@ const App = () => {
   const [lastOperator,setLastOperator] = useState("");
   const [isMouseDown,setIsMouseDown] = useState();
   const [isPrank, setIsPrank] = useState(false);
+  const isEventAttached = useRef(false);
+
+
+  useEffect(()=>{
+  !isEventAttached.current && window.addEventListener("keypress", (e) => {
+  console.log(e);
+  const value = e.key;
+  if (e.code.includes("Key")) {
+    return;
+  }
+  buttonAction(value);
+},[]);
+111
+  })
 
 const buttonAction =(value) =>{
    isPrank && setIsPrank(false);
