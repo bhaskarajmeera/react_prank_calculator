@@ -17,16 +17,10 @@ const App = () => {
 
 
   useEffect(()=>{
-  !isEventAttached.current && window.addEventListener("keypress", (e) => {
-  console.log(e);
+  !isEventAttached.current && window.addEventListener("keypress", (e) => {console.log(e);
   const value = e.key;
-  if (e.code.includes("Key")) {
-    return;
-  }
-  buttonAction(value);
-},[]);
-111
-  })
+  if (e.code.includes("Key")){return;} buttonAction(value);});
+ isEventAttached.current = true; },[]);
 
 const buttonAction =(value) =>{
    isPrank && setIsPrank(false);
